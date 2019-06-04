@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'movie_detail.dart';
+import 'detail_net.dart';
 
 class MovieList extends StatefulWidget {
   ///in_theaters :正在热映  coming_soon:即将上映 top250 ： Top250
@@ -19,6 +20,7 @@ class _MovieListState extends State<MovieList>
   int pageSize = 10;
   var mList = [];
   int total = 0;
+  bool hasMore = false;
 
   @override
   void initState() {
@@ -29,6 +31,7 @@ class _MovieListState extends State<MovieList>
 
   Widget _movieItem(BuildContext context, int index) {
     var item = mList[index];
+    List casts = item['casts'];
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
@@ -61,7 +64,35 @@ class _MovieListState extends State<MovieList>
                     Text('上映年份：${item['year']}年'),
                     Text('电影类型：${item['genres'].join('.')}'),
                     Text('豆瓣评分：${item['rating']['average']}分'),
-                    Text('主要演员：${item['title']}'),
+                    Row(
+                      children: <Widget>[
+                        Text('主要演员：'),
+                        Wrap(
+                          spacing: 8.0,
+                          children: casts
+                              .map((item) => GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return DetailFromNet(
+                                          title: item['name'],
+                                          url: item['alt'],
+                                        );
+                                      }));
+                                    },
+                                    child: Container(
+                                      height: 30,
+                                      width: 30,
+                                      child: CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                            item['avatars']['small']),
+                                      ),
+                                    ),
+                                  ))
+                              .toList(),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),

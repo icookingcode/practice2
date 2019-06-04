@@ -14,3 +14,4 @@
     * 配置 android/app/build.gradle 
     * 运行 flutter build apk
     * 打包好的发布APK位于 <app dir>/build/app/outputs/apk/app-release.apk
+## flutter_webview_plugin ^0.3.5

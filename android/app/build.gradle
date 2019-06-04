@@ -67,11 +67,11 @@ android {
     }
 
 }
-android.applicationVariants.all { variant ->
-    variant.outputs.all {
-        outputFileName = "movie_${buildTime}_${variant.name}_V${variant.versionName}.apk"
-    }
-}
+//android.applicationVariants.all { variant ->
+//    variant.outputs.all {
+//        outputFileName = "movie_${buildTime}_${variant.name}_V${variant.versionName}.apk"
+//    }
+//}
 
 flutter {
     source '../..'
